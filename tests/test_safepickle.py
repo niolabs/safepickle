@@ -23,4 +23,3 @@ class TestSafepickle(TestCase):
         from_instance = loads(instance_as_str)
         for key, value in instance.__dict__.items():
             self.assertEqual(from_instance[key], value)
-

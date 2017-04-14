@@ -4,8 +4,13 @@ from .types import TypesManager
 
 class Encoder(json.JSONEncoder):
     def default(self, obj):
+        """ Overrides encoder for given instance
+        
+        Args:
+            obj: instance to encode
+        """
         for type_ in TypesManager.get_types():
-            if type_.encoder_type(obj):
+            if type_.is_type(obj):
                 return type_.encode(obj)
 
         if hasattr(obj, "__dict__"):
@@ -19,8 +24,13 @@ class Decoder(json.JSONDecoder):
         super().__init__(object_hook=self._decoder, *args, **kwargs)
 
     def _decoder(self, obj):
+        """ Overrides decoder for given instance
+
+        Args:
+            obj: instance to decode
+        """
         for type_ in TypesManager.get_types():
-            if type_.decoder_type(obj):
+            if type_.is_type(obj):
                 return type_.decode(obj)
 
         return obj
