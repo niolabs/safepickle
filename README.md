@@ -1,4 +1,4 @@
-# safepickle project
+# safepickle
 
 A safe alternative to Python's pickle module.
 
