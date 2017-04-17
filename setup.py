@@ -34,6 +34,7 @@ setup(
     name='safepickle',
     description="An alternative to using Python's pickle",
     keywords=['safepickle'],
+    license='Apache 2.0',
     version=version,
     packages=find_packages(
         exclude=['*.tests', '*.tests.*', 'tests.*', 'tests']),
