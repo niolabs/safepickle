@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from ..safepickle import dumps, loads
+from safepickle import dumps, loads
 
 from unittest import TestCase
 
