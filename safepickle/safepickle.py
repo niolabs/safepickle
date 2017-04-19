@@ -1,11 +1,11 @@
 import json
 
 from .encoding import Encoder, Decoder
-from pickle import PickleError, PicklingError, UnpicklingError
+from pickle import PicklingError, UnpicklingError
 
 
 def load(file):
-    """ Read a json object representation from the open file object file. 
+    """ Read a json object representation from the opened file object file. 
     
     Args:
         file: file object
@@ -15,7 +15,7 @@ def load(file):
     """
     try:
         return json.load(file, cls=Decoder)
-    except Exception as e:
+    except (TypeError, ValueError) as e:
         raise UnpicklingError(str(e))
 
 
@@ -34,12 +34,12 @@ def dump(obj, file, **kwargs):
 
     try:
         return json.dump(obj, file, cls=Encoder, **kwargs)
-    except Exception as e:
+    except TypeError as e:
         raise PicklingError(str(e))
 
 
 def loads(str_obj):
-    """ Read a json object representation from the open file object file. 
+    """ Read a json object representation from the string representation. 
 
     Args:
         str_obj: object as a string
@@ -49,7 +49,7 @@ def loads(str_obj):
     """
     try:
         return json.loads(str_obj, cls=Decoder)
-    except Exception as e:
+    except (TypeError, ValueError) as e:
         raise UnpicklingError(str(e))
 
 
@@ -64,5 +64,5 @@ def dumps(obj):
     """
     try:
         return json.dumps(obj, cls=Encoder)
-    except Exception as e:
+    except TypeError as e:
         raise PicklingError(str(e))
