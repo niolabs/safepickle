@@ -1,4 +1,5 @@
 from .safepickle import load, loads, dump, dumps
+from .safepickle import PicklingError, UnpicklingError
 
 
 __title__ = 'safepickle'
