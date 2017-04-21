@@ -1,14 +1,16 @@
 from datetime import datetime, timedelta
+from tempfile import mkstemp
 from unittest.mock import Mock
 
 from safepickle import dumps, loads, load, dump, PicklingError, UnpicklingError
 
 from unittest import TestCase
+import os
 
 
 class TestSafepickle(TestCase):
 
-    def test_roundtrip(self):
+    def test_instance_roundtrip(self):
         class ClassToPersist(object):
             def __init__(self):
                 self._list = [1, 2]
@@ -21,8 +23,8 @@ class TestSafepickle(TestCase):
 
         instance = ClassToPersist()
 
-        instance_as_str = dumps(instance)
-        from_instance = loads(instance_as_str)
+        instance_as_bytes = dumps(instance)
+        from_instance = loads(instance_as_bytes)
         for key, value in instance.__dict__.items():
             self.assertEqual(from_instance[key], value)
 
@@ -30,13 +32,17 @@ class TestSafepickle(TestCase):
         """ Asserts several load/loads error conditions
         """
 
-        # TypeError to UnpicklingError
-        with self.assertRaises(UnpicklingError):
-            loads(['invalid'])
+        # Invalid type (no bytes passed in)
+        with self.assertRaises(AttributeError):
+            loads('{}')
 
         # ValueError to UnpicklingError
         with self.assertRaises(UnpicklingError):
-            loads('{invalid}')
+            loads(b'[invalid]')
+
+        # ValueError to UnpicklingError
+        with self.assertRaises(UnpicklingError):
+            loads(b'{invalid}')
 
         # TypeError to UnpicklingError
         fp = Mock()
@@ -72,3 +78,45 @@ class TestSafepickle(TestCase):
         with self.assertRaises(AttributeError):
             # here an opened file object is expected
             dump("", 'not an opened file instance')
+
+    def test_dict_roundtrip(self):
+        """ Asserts dumps/loads dealing with bytes
+        """
+        obj = {
+            "_list": [1, 2],
+            "_dict": {"one": 1},
+            "_set": {1, 2},
+            "_int": 1,
+            "_float": 1.0,
+            "_datetime": datetime(year=1, month=1, day=1),
+            "_timedelta": timedelta(days=1)
+        }
+        obj_as_bytes = dumps(obj)
+        from_obj = loads(obj_as_bytes)
+
+        self.assertDictEqual(obj, from_obj)
+        self.assertIsInstance(obj_as_bytes, bytes)
+
+    def test_save_load_roundtrip(self):
+        """ Asserts dump/load file saving/loading
+        """
+        obj = {
+            "_list": [1, 2],
+            "_dict": {"one": 1},
+            "_set": {1, 2},
+            "_int": 1,
+            "_float": 1.0,
+            "_datetime": datetime(year=1, month=1, day=1),
+            "_timedelta": timedelta(days=1)
+        }
+        fd, temp_path = mkstemp()
+        try:
+            with open(temp_path, 'w') as fd:
+                dump(obj, fd)
+
+            self.assertTrue(os.path.isfile(temp_path))
+            with open(temp_path, 'r') as fd:
+                from_file = load(fd)
+            self.assertDictEqual(obj, from_file)
+        finally:
+            os.remove(temp_path)

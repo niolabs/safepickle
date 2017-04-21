@@ -33,36 +33,43 @@ def dump(obj, file, **kwargs):
         kwargs['separators'] = (',', ': ')
 
     try:
-        return json.dump(obj, file, cls=Encoder, **kwargs)
+        json.dump(obj, file, cls=Encoder, **kwargs)
     except TypeError as e:
         raise PicklingError(str(e))
 
 
-def loads(str_obj):
-    """ Read a json object representation from the string representation. 
+def loads(bytes_obj, encoding="utf-8", errors="strict"):
+    """ Read a json object representation from the bytes representation. 
 
     Args:
-        str_obj: object as a string
+        bytes_obj (bytes): bytes object representation
+        encoding (str): encoding to use to decode bytes
+        errors (str): same as decode 'errors' argument.
 
     Returns:
         object representation as a dict
     """
+    str_obj = bytes_obj.decode(encoding=encoding, errors=errors)
     try:
         return json.loads(str_obj, cls=Decoder)
-    except (TypeError, ValueError) as e:
+    except ValueError as e:
         raise UnpicklingError(str(e))
 
 
-def dumps(obj):
-    """ Write a json representation of object to string
+def dumps(obj, encoding="utf-8", errors="strict"):
+    """ Write a json representation of object as a bytes object
 
     Args:
         obj: object to represent
+        encoding (str): encoding to use to encode bytes
+        errors (str): same as encode 'errors' argument.
           
     Returns:
-        object as a string
+        object representation as a bytes object
     """
     try:
-        return json.dumps(obj, cls=Encoder)
+        str_obj = json.dumps(obj, cls=Encoder)
     except TypeError as e:
         raise PicklingError(str(e))
+
+    return str_obj.encode(encoding=encoding, errors=errors)
