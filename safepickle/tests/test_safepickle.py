@@ -16,6 +16,7 @@ class TestSafepickle(TestCase):
                 self._list = [1, 2]
                 self._dict = {"one": 1}
                 self._set = {1, 2}
+                self._tuple = (1, 2),
                 self._int = 1
                 self._float = 1.0
                 self._datetime = datetime(year=1, month=1, day=1)
@@ -86,6 +87,7 @@ class TestSafepickle(TestCase):
             "_list": [1, 2],
             "_dict": {"one": 1},
             "_set": {1, 2},
+            "_tuple": (1, 2),
             "_int": 1,
             "_float": 1.0,
             "_datetime": datetime(year=1, month=1, day=1),
@@ -104,6 +106,7 @@ class TestSafepickle(TestCase):
             "_list": [1, 2],
             "_dict": {"one": 1},
             "_set": {1, 2},
+            "_tuple": (1, 2),
             "_int": 1,
             "_float": 1.0,
             "_datetime": datetime(year=1, month=1, day=1),
