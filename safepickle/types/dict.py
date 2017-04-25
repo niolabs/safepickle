@@ -14,4 +14,4 @@ class DictType(EncoderDecoderType):
         return isinstance(obj, dict) and '__dct__' in obj
 
     def decode(self, obj):
-        return dict(obj['__dct__']) if '__dct__' in obj else dict(obj)
+        return obj['__dct__']
