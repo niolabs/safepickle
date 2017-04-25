@@ -6,7 +6,7 @@ from safepickle.encoding import encode, decode
 
 class TestSet(TestCase):
 
-    def test_list(self):
+    def test_set(self):
         """ Asserts set type is handled as expected
         """
         obj = {1, 2}

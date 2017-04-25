@@ -4,9 +4,9 @@ from safepickle.types.tuple import TupleType
 from safepickle.encoding import encode, decode
 
 
-class TestSet(TestCase):
+class TestTuple(TestCase):
 
-    def test_list(self):
+    def test_tuple(self):
         """ Asserts tuple type is handled as expected
         """
         obj = (1, 2)

@@ -5,6 +5,8 @@ from .list import ListType
 from .instance import InstanceType
 from .datetime_ import DatetimeType
 from .timedelta import TimedeltaType
+from .bytearray import ByteArrayType
+from .bytes import BytesType
 
 
 class _TypesManager(object):
@@ -18,6 +20,8 @@ class _TypesManager(object):
             ListType(),
             DatetimeType(),
             TimedeltaType(),
+            ByteArrayType(),
+            BytesType(),
             InstanceType()
         ]
 
