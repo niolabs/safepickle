@@ -1,6 +1,12 @@
 from .set import SetType
+from .tuple import TupleType
+from .dict import DictType
+from .list import ListType
+from .instance import InstanceType
 from .datetime_ import DatetimeType
 from .timedelta import TimedeltaType
+from .bytearray import ByteArrayType
+from .bytes import BytesType
 
 
 class _TypesManager(object):
@@ -9,8 +15,14 @@ class _TypesManager(object):
     def __init__(self):
         self._types = [
             SetType(),
+            TupleType(),
+            DictType(),
+            ListType(),
             DatetimeType(),
-            TimedeltaType()
+            TimedeltaType(),
+            ByteArrayType(),
+            BytesType(),
+            InstanceType()
         ]
 
     def get_types(self):
