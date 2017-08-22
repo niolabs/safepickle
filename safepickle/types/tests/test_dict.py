@@ -19,7 +19,7 @@ class TestDict(TestCase):
         self.assertDictEqual(obj, decoding)
 
     def test_dict_non_numbered_keys(self):
-        """ Asserts dict with numbered keys
+        """ Asserts dict with non-numbered keys
         """
         obj = {
             "1": 1, "2": 2

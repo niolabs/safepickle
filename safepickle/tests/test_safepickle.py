@@ -123,3 +123,18 @@ class TestSafepickle(TestCase):
             self.assertDictEqual(obj, from_file)
         finally:
             os.remove(temp_path)
+
+    def test_converted_keys(self):
+        """ Asserts that keys can be instances of types that are converted
+        """
+        obj = {
+            (1, 2): 3,
+            datetime.now(): 1,
+            timedelta(seconds=1): "timedelta",
+            datetime.now(): {datetime.now(): datetime.now()}
+        }
+        obj_as_bytes = dumps(obj)
+        from_obj = loads(obj_as_bytes)
+
+        self.assertDictEqual(obj, from_obj)
+        self.assertIsInstance(obj_as_bytes, bytes)
