@@ -19,6 +19,6 @@ class DictType(EncoderDecoderType):
         # there are no legacy files outstanding
         try:
             return {k: v for (k, v) in obj['__dct__']}
-        except:
+        except ValueError:
             # attempt to load it as legacy version used to
             return obj['__dct__']
