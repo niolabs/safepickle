@@ -15,4 +15,10 @@ class DictType(EncoderDecoderType):
         return isinstance(obj, dict) and '__dct__' in obj
 
     def decode(self, obj):
-        return {k: v for (k, v) in obj['__dct__']}
+        # try/catch can be removed when it is a fact that
+        # there are no legacy files outstanding
+        try:
+            return {k: v for (k, v) in obj['__dct__']}
+        except:
+            # attempt to load it as legacy version used to
+            return obj['__dct__']
