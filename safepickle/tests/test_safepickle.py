@@ -138,3 +138,43 @@ class TestSafepickle(TestCase):
 
         self.assertDictEqual(obj, from_obj)
         self.assertIsInstance(obj_as_bytes, bytes)
+
+        # assert that there is no difference when dumping to file
+        fd, temp_path = mkstemp()
+        try:
+            with open(temp_path, 'w') as fd:
+                dump(obj, fd)
+
+            with open(temp_path, 'r') as fd:
+                from_file = load(fd)
+
+            self.assertDictEqual(obj, from_file)
+
+        finally:
+            os.remove(temp_path)
+
+    def test_numeric_keys(self):
+        """ Asserts that keys can be numeric
+        """
+        obj = {
+            None: 1,
+            1: 2,
+            1.1: 1.2
+        }
+        s = dumps(obj)
+        from_s = loads(s)
+        self.assertEqual(obj, from_s)
+
+        # assert that there is no difference when dumping to file
+        fd, temp_path = mkstemp()
+        try:
+            with open(temp_path, 'w') as fd:
+                dump(obj, fd)
+
+            with open(temp_path, 'r') as fd:
+                from_file = load(fd)
+
+            self.assertDictEqual(obj, from_file)
+
+        finally:
+            os.remove(temp_path)
