@@ -14,3 +14,6 @@ class InstanceType(EncoderDecoderType):
     def decode(self, obj):
         # no special decoding needed
         pass
+
+    def get_type(self):
+        return object

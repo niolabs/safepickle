@@ -38,3 +38,8 @@ class EncoderDecoderType(object):
             obj: instance to decode 
         """
         raise NotImplementedError
+
+    def get_type(self):
+        """ Provides supported type
+        """
+        raise NotImplementedError

@@ -13,3 +13,6 @@ class BytesType(EncoderDecoderType):
 
     def decode(self, obj):
         return bytes(obj['__bytes__'])
+
+    def get_type(self):
+        return bytes

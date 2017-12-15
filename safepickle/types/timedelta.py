@@ -18,3 +18,6 @@ class TimedeltaType(EncoderDecoderType):
 
     def decode(self, obj):
         return timedelta(**obj['__timedelta__'])
+
+    def get_type(self):
+        return timedelta

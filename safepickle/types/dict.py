@@ -22,3 +22,6 @@ class DictType(EncoderDecoderType):
         except ValueError:
             # attempt to load it as legacy version used to
             return obj['__dct__']
+
+    def get_type(self):
+        return dict
