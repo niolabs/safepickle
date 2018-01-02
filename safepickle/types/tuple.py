@@ -13,3 +13,6 @@ class TupleType(EncoderDecoderType):
 
     def decode(self, obj):
         return tuple(obj['__tuple__'])
+
+    def get_type(self):
+        return tuple

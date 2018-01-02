@@ -1,3 +1,4 @@
+from collections import defaultdict
 from datetime import datetime, timedelta
 from tempfile import mkstemp
 from unittest.mock import Mock
@@ -21,6 +22,9 @@ class TestSafepickle(TestCase):
                 self._float = 1.0
                 self._datetime = datetime(year=1, month=1, day=1)
                 self._timedelta = timedelta(days=1)
+                self._defaultdict_int = defaultdict(int)
+                self._defaultdict_list = defaultdict(list)
+                self._defaultdict_set = defaultdict(set)
 
         instance = ClassToPersist()
 
@@ -91,7 +95,10 @@ class TestSafepickle(TestCase):
             "_int": 1,
             "_float": 1.0,
             "_datetime": datetime(year=1, month=1, day=1),
-            "_timedelta": timedelta(days=1)
+            "_timedelta": timedelta(days=1),
+            "_defaultdict_int": defaultdict(int),
+            "_defaultdict_list": defaultdict(list),
+            "_defaultdict_set": defaultdict(set)
         }
         obj_as_bytes = dumps(obj)
         from_obj = loads(obj_as_bytes)
@@ -110,7 +117,10 @@ class TestSafepickle(TestCase):
             "_int": 1,
             "_float": 1.0,
             "_datetime": datetime(year=1, month=1, day=1),
-            "_timedelta": timedelta(days=1)
+            "_timedelta": timedelta(days=1),
+            "_defaultdict_int": defaultdict(int),
+            "_defaultdict_list": defaultdict(list),
+            "_defaultdict_set": defaultdict(set)
         }
         fd, temp_path = mkstemp()
         try:

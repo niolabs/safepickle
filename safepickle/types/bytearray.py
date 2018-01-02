@@ -13,3 +13,6 @@ class ByteArrayType(EncoderDecoderType):
 
     def decode(self, obj):
         return bytearray(obj['__bytearray__'])
+
+    def get_type(self):
+        return bytearray

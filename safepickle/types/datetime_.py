@@ -21,3 +21,6 @@ class DatetimeType(EncoderDecoderType):
 
     def decode(self, obj):
         return datetime(**obj['__datetime__'])
+
+    def get_type(self):
+        return datetime

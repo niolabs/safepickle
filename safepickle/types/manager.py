@@ -1,3 +1,4 @@
+from .defaultdict import DefaultDictType
 from .set import SetType
 from .tuple import TupleType
 from .dict import DictType
@@ -16,6 +17,7 @@ class _TypesManager(object):
         self._types = [
             SetType(),
             TupleType(),
+            DefaultDictType(),
             DictType(),
             ListType(),
             DatetimeType(),
@@ -27,6 +29,29 @@ class _TypesManager(object):
 
     def get_types(self):
         return self._types
+
+    def get_str_type(self, raw_type):
+        """ Provides the string name for a given type
+        """
+        for type_ in (bool, int, float, str):
+            if type_ == raw_type:
+                return type_.__name__
+
+        for type_ in self._types:
+            if type_.get_type() == raw_type:
+                return type_.__class__.__name__
+
+    def get_type(self, str_type):
+        """ Provides a type from its string name
+        """
+        for type_ in (bool, int, float, str):
+            if str_type == type_.__name__:
+                return type_
+
+        for type_ in self._types:
+            if type_.__class__.__name__ == str_type:
+                return type_.get_type()
+
 
 # Singleton instance to _TypesManager
 TypesManager = _TypesManager()

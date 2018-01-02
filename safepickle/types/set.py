@@ -13,3 +13,6 @@ class SetType(EncoderDecoderType):
 
     def decode(self, obj):
         return set(obj['__set__'])
+
+    def get_type(self):
+        return set
