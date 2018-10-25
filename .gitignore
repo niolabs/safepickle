@@ -19,6 +19,9 @@ test_results.xml
 # Rope Project stuff
 .ropeproject
 
+# Sphinx stuff
+docs/build
+
 # Emacs swap files
 *~
 
