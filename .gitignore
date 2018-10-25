@@ -27,3 +27,6 @@ test_results.xml
 
 # Test cache
 /.cache
+
+# Build files
+safepickle.egg-info
