@@ -15,7 +15,7 @@ Safepickle is designed to be used as a drop-in replacement wherever you currentl
 ```python
 import safepickle as pickle
 
-obj = {'loves pickles': true}
+obj = {'loves pickles': True}
 obj_str = pickle.dumps(obj)
 obj_again = pickle.loads(obj_str)
 
